@@ -24,3 +24,49 @@
     }
   }
 */
+const xhr = new XMLHttpRequest();
+let response = null;
+
+const xhrUtil = {
+    init: (httpMethod, url, payload) => {
+        if (httpMethod.toUpperCase() == 'GET') {
+            url = url + (payload ? payload : ''); 
+        }
+        xhr.open(httpMethod, url);
+        if (httpMethod.toUpperCase()=='POST' ||
+            httpMethod.toUpperCase()=='PUT' ||
+            httpMethod.toUpperCase()=='PATCH'
+       ) {
+        xhr.setRequestHeader('content-type', 'application/json');
+        }
+        xhr.send(payload);
+    }
+};
+
+xhr.onreadystatechange = () => {
+    if (xhr.readyState !== 4) return false;
+    if (xhr.status == 200 || xhr.status == 201) {
+        response = xhr.response;
+    } else {
+        console.error('에러발생!', xhr.status, xhr.statusText);
+    }
+}
+
+// const getAllUsers = document.getElementById('getAllUsers');
+document.querySelector('#getAllUsers').addEventListener('click', () => {
+    xhrUtil.init('GET', 'https://jsonplaceholder.typicode.com/users');
+    console.log(response);
+    const table = document.createElement('table');
+    table.appendChild(response);
+    document.body.appendChild(table);
+
+});
+
+document.querySelector('#getUser').addEventListener('click', e => {
+    xhrUtil.init('GET', 'https://jsonplaceholder.typicode.com/users', 
+        '?id='+document.querySelector('#userId').value);
+    console.log(response);
+});
+
+
+
