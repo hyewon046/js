@@ -55,8 +55,20 @@ xhr.onreadystatechange = () => {
 // const getAllUsers = document.getElementById('getAllUsers');
 document.querySelector('#getAllUsers').addEventListener('click', () => {
     xhrUtil.init('GET', 'https://jsonplaceholder.typicode.com/users');
-    
-    // const tbody = document.querySelector('tbody');
+
+    const arr = JSON.parse(response);
+    const tbody = document.querySelector('tbody');
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td>${obj.id}</td><td>${obj.name}</td>
+        <td>${obj.username}</td><td>${obj.email}</td>
+        <td>${obj.address}</td><td>${phone}</td>
+        <td>${obj.website}</td><td>${obj.company}</td>
+    `;
+
+
+
     // const td = document.createElement('td');
     // td.appendChild(response);
     // tbody.appendChild(td);
