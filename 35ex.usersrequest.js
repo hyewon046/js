@@ -55,11 +55,12 @@ xhr.onreadystatechange = () => {
 // const getAllUsers = document.getElementById('getAllUsers');
 document.querySelector('#getAllUsers').addEventListener('click', () => {
     xhrUtil.init('GET', 'https://jsonplaceholder.typicode.com/users');
-    console.log(response);
-    const table = document.createElement('table');
-    table.appendChild(response);
-    document.body.appendChild(table);
-
+    
+    // const tbody = document.querySelector('tbody');
+    // const td = document.createElement('td');
+    // td.appendChild(response);
+    // tbody.appendChild(td);
+    // document.appendChild(tbody);
 });
 
 document.querySelector('#getUser').addEventListener('click', e => {
