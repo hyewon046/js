@@ -26,7 +26,7 @@ const sel = document.querySelector('#sel');
 const asc = document.querySelector('#asc');
 const desc = document.querySelector('#desc');
 
-//응답값들로 배열 선언
+//배열 선언
 let responseArr = null;
 
 //전체 데이터 조회
@@ -35,7 +35,7 @@ listPerson.addEventListener('click', e => {
     xhr.open('GET', 'http://localhost:7777/persons');
     xhr.send();
     xhr.onload = () => {
-        //json객체를 문자열로 변환
+        //json문자열을 객체로 변환
         responseArr = JSON.parse(xhr.response);
         printList(responseArr);
     };
@@ -91,14 +91,17 @@ registPerson.addEventListener('click', e => {
     };
 });
 
+//오름차순 정렬
 asc.addEventListener('click', () => {
     printList(responseArr, sel.value, 'ASC')
 });
 
+//내림차순 정렬
 desc.addEventListener('click', () => {
     printList(responseArr, sel.value, 'DESC')
 });
 
+//정렬하고 테이블에 추가하는 메소드
 const printList = (responseArr, selValue, sort) => {
     if (selValue) {
         //selValue가 숫자라면
@@ -113,7 +116,8 @@ const printList = (responseArr, selValue, sort) => {
         } else {
             responseArr.sort((obj1, obj2) => {
                 if (sort==='ASC') {
-                    //localecompare : 문자열비교
+                    //localecompare : 문자열비교, 영어 숫자 외에는 그냥 compare사용불가
+                    //양수 혹은 음수 리턴
                     return obj1[selValue].localeCompare(obj2[selValue]);
                 } else if (sort==='DESC') {
                     return obj2[selValue].localeCompare(obj1[selValue]);
@@ -138,8 +142,11 @@ const printList = (responseArr, selValue, sort) => {
     }    
 };
 
+//수정 
 const modifyPerson = pid => {
+    //확인팝업띄우기
     const confirm = window.confirm('수정하시겠습니까?');
+    //확인말고 다른거누르면 취소됨
     if (!confirm) return;
     const pname = document.querySelector('#name'+pid).value;
     const page = document.querySelector('#age'+pid).value;
@@ -152,7 +159,9 @@ const modifyPerson = pid => {
     };    
 }
 
+//삭제
 const deletePerson = pid => {
+    //확인팝업띄우기
     const confirm = window.confirm('삭제하시겠습니까?');
     if (!confirm) return;
     const xhr = new XMLHttpRequest();
@@ -163,4 +172,5 @@ const deletePerson = pid => {
     };    
 }
 
+//처음부터 실행하고 시작함
 listPerson.click();
