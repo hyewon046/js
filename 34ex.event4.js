@@ -9,67 +9,68 @@
 //     //appendchild도 써야할것같으다
 // });
 
-const regist = document.querySelector('button');
-const name = document.querySelector('input[type="text"]:nth-child(1)');
-const kor = document.querySelector('input[type="text"]:nth-child(3)');
-const eng = document.querySelector('input[type="text"]:nth-child(5)');
-const math = document.querySelector('input[type="text"]:nth-child(7)');
-const tbody = document.querySelector('tbody');
-const tfoot = document.querySelector('tfoot tr');
+const nameInput = document.querySelector("input:nth-child(1)");
+const koreanInput = document.querySelector("input:nth-child(2)");
+const englishInput = document.querySelector("input:nth-child(3)");
+const mathInput = document.querySelector("input:nth-child(4)");
+const registerButton = document.querySelector("button");
+const tbody = document.querySelector("tbody");
+const tfootCells = document.querySelectorAll("tfoot td");
 
-document.addEventListener('DOMContentLoaded', () => {
-    const regist = document.querySelector('button');
-    const name = document.querySelector('input[type="text"]:nth-child(1)');
-    const kor = document.querySelector('input[type="text"]:nth-child(3)');
-    const eng = document.querySelector('input[type="text"]:nth-child(5)');
-    const math = document.querySelector('input[type="text"]:nth-child(7)');
-    const tbody = document.querySelector('tbody');
-    const tfoot = document.querySelector('tfoot tr');
+registerButton.addEventListener("click", () => {
+    const name = nameInput.value.trim();
+    const korean = parseInt(koreanInput.value.trim()) || 0;
+    const english = parseInt(englishInput.value.trim()) || 0;
+    const math = parseInt(mathInput.value.trim()) || 0;
+    const total = korean + english + math;
 
-    function calTotal() {
-        let korSum = 0, engSum = 0, mathSum = 0;
-        tbody.querySelectorAll('tr').forEach(row => {
-            korSum += parseInt(row.cells[1].textContent);
-            engSum += parseInt(row.cells[2].textContent);
-            mathSum += parseInt(row.cells[3].textContent);
-        });
-        tfoot.cells[1].textContent = korSum;
-        tfoot.cells[2].textContent = engSum;
-        tfoot.cells[3].textContent = mathSum;
-    }
-    // regist.addEventListener('click', () => {
-
-    // });
-    function add() {
-        const nameValue = name.value;
-        const korValue = parseInt(kor.value);
-        const engValue = parseInt(eng.value);
-        const mathValue = parseInt(math.value);
-        const total = korValue + engValue + mathValue;
-
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${nameValue}</td>
-            <td>${korValue}</td>
-            <td>${engValue}</td>
-            <td>${mathValue}</td>
-            <td>${total}</td>
-            <td><button class="delete">삭제</button></td>
-        `;
-        tbody.appendChild(row);
-
-        row.querySelector('.delete').addEventListener('click', () => {
-            row.remove();
-            calTotal();
-        });
-
-        calTotal();
-
-        name.value = '';
-        kor.value = '';
-        eng.value = '';
-        math.value = '';
+    if (!name) {
+        alert("성명을 입력하세요.");
+        return;
     }
 
-    regist.addEventListener('click', add);
+    const newRow = document.createElement("tr");
+    newRow.innerHTML = `
+        <td>${name}</td>
+        <td>${korean}</td>
+        <td>${english}</td>
+        <td>${math}</td>
+        <td>${total}</td>
+        <td><button class="delete">삭제</button></td>
+    `;
+
+    tbody.appendChild(newRow);
+
+    updateTotals();
+
+    // Clear inputs
+    nameInput.value = "";
+    koreanInput.value = "";
+    englishInput.value = "";
+    mathInput.value = "";
 });
+
+tbody.addEventListener("click", (event) => {
+    if (event.target.classList.contains("delete")) {
+        const row = event.target.closest("tr");
+        tbody.removeChild(row);
+        updateTotals();
+    }
+});
+
+const updateTotals = () => {
+    let koreanTotal = 0;
+    let englishTotal = 0;
+    let mathTotal = 0;
+
+    tbody.querySelectorAll("tr").forEach(row => {
+        const cells = row.querySelectorAll("td");
+        koreanTotal += parseInt(cells[1].textContent);
+        englishTotal += parseInt(cells[2].textContent);
+        mathTotal += parseInt(cells[3].textContent);
+    });
+
+    tfootCells[1].textContent = koreanTotal;
+    tfootCells[2].textContent = englishTotal;
+    tfootCells[3].textContent = mathTotal;
+};

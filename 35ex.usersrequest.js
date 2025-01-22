@@ -87,6 +87,7 @@ let response = null;
 const xhrUtil = {
     init: (httpMethod, url, payload) => {
        if (httpMethod.toUpperCase()=='GET') {
+            //payload가 있으면 url에 payload를 붙이고 없으면 그냥 url만
            url = url + (payload ? payload : '');
        }
        xhr.open(httpMethod, url);
@@ -102,6 +103,7 @@ const xhrUtil = {
 
 xhr.onreadystatechange = () => {
     if (xhr.readyState!==4) return false;
+    //200과 201 둘다 정상적인 결과임
     if (xhr.status==200 || xhr.status==201) {
         response = xhr.response;
     } else {
@@ -138,6 +140,7 @@ const setRow = (response, sort) => {
     if (sort==='asc') arr.sort((a, b) => a.id-b.id);
     if (sort==='desc') arr.sort((a, b) => b.id-a.id);
 
+    //항상 초기화작업 미리 필요(반복문 바깥에서 실행해야함)
     document.querySelector('tbody').textContent = '';
 
     if (arr!=null) {
