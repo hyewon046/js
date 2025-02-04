@@ -36,7 +36,6 @@ registerButton.addEventListener("click", () => {
 
     updateTotals();
 
-    // Clear inputs
     nameInput.value = "";
     koreanInput.value = "";
     englishInput.value = "";
