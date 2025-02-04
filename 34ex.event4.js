@@ -2,20 +2,13 @@
 // 데이터 : 성명,국어,영어,수학
 // 기능 : 등록, 삭제, 개인총점, 과목총점 연산
 
-// const regist = document.querySelector('button');
-// regist.addEventListener('click', e=>{
-//     const type = document.querySelectorAll('input[type="text"]');
-
-//     //appendchild도 써야할것같으다
-// });
-
 const nameInput = document.querySelector("input:nth-child(1)");
 const koreanInput = document.querySelector("input:nth-child(2)");
 const englishInput = document.querySelector("input:nth-child(3)");
 const mathInput = document.querySelector("input:nth-child(4)");
 const registerButton = document.querySelector("button");
 const tbody = document.querySelector("tbody");
-const tfootCells = document.querySelectorAll("tfoot td");
+const tfoot = document.querySelectorAll("tfoot td");
 
 registerButton.addEventListener("click", () => {
     const name = nameInput.value.trim();
@@ -70,7 +63,7 @@ const updateTotals = () => {
         mathTotal += parseInt(cells[3].textContent);
     });
 
-    tfootCells[1].textContent = koreanTotal;
-    tfootCells[2].textContent = englishTotal;
-    tfootCells[3].textContent = mathTotal;
+    tfoot[1].textContent = koreanTotal;
+    tfoot[2].textContent = englishTotal;
+    tfoot[3].textContent = mathTotal;
 };
