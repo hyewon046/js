@@ -1,7 +1,7 @@
 const fileList = document.getElementById('fileList');
 const nameList = document.querySelector('#nameList ul');
 
-// 파일 입력 요소와 버튼의 이벤트 처리
+
 fileList.addEventListener('click', (event) => {
     const target = event.target;
 
@@ -15,7 +15,6 @@ fileList.addEventListener('click', (event) => {
     }
 });
 
-// 파일 입력 요소 변경 시 파일 이름을 추가하는 이벤트 리스너
 const handleFileSelect = (event) => {
     const fileInput = event.target;
     const fileName = fileInput.files[0] ? fileInput.files[0].name : null;
@@ -25,7 +24,7 @@ const handleFileSelect = (event) => {
     }
 };
 
-// 새로운 파일 입력 세트를 추가하는 함수
+// 새로운 파일 입력 추가
 const addFileInputSet = () => {
     const fileInputSet = document.createElement('div');
 
@@ -51,14 +50,14 @@ const addFileInputSet = () => {
     fileList.appendChild(fileInputSet);
 };
 
-// 파일 이름을 목록에 추가하는 함수
+// 파일 이름을 목록에 추가
 const addFileNameToList = (fileName) => {
     const li = document.createElement('li');
     li.textContent = fileName;
     nameList.appendChild(li);
 };
 
-// 파일 입력 세트를 제거하는 함수
+// 파일 입력 제거
 const removeFileInputSet = (fileInputSet) => {
     if (fileList.children.length > 1) {
         fileList.removeChild(fileInputSet);
